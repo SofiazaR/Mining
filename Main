@@ -1,0 +1,25 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\Sofa\\IdeaProjects\\Data Mining\\src\\transactions .csv"));
+        PrintWriter out = new PrintWriter("C:\\Users\\Sofa\\IdeaProjects\\Data Mining\\src\\res.csv");
+        String line = in.readLine();
+        Map<String,Long> map = new HashMap<>();
+        while (line != null){
+            StringTokenizer st = new StringTokenizer(line,";");
+            String prodCode = st.nextToken();
+            map.put(prodCode,map.getOrDefault(prodCode,(long)0)+1);
+            line = in.readLine();
+        }
+        in.close();
+        map.entrySet().stream().sorted((n1,n2)->n1.getValue().compareTo(n2.getValue())).forEach(n->out.println(n));
+        out.close();
+    }
+}
